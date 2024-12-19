@@ -1,7 +1,19 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import { gql } from "@apollo/client";
+import { query } from "./ac";
 
-export default function Home() {
+const GET_LATEST_PRODUCTS = gql`
+  query HomepageProducts {
+    products {
+      id
+    }
+  }
+`;
+
+export const dynamic = "force-dynamic";
+export default async function Home() {
+  const products = await query({ query: GET_LATEST_PRODUCTS });
   return (
     <div className={styles.page}>
       <main className={styles.main}>
